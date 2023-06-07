@@ -1,0 +1,356 @@
+[gd_scene load_steps=29 format=3 uid="uid://bsyn1lqkql5t6"]
+
+[ext_resource type="Script" path="res://Player.cs" id="1_g7hw2"]
+[ext_resource type="Texture2D" uid="uid://c8snj24qbyyn7" path="res://Art/Bot Wheel/move_gunless_without_FX.png" id="2_1ysmt"]
+[ext_resource type="Texture2D" uid="uid://dv2elom002cf0" path="res://Art/Bot Wheel/move with FX_gunless.png" id="2_bjcte"]
+[ext_resource type="Script" path="res://CharacterStateMachine.cs" id="3_rleej"]
+[ext_resource type="Script" path="res://GroundState.cs" id="4_b5cvb"]
+[ext_resource type="Script" path="res://AirState.cs" id="5_qwht0"]
+[ext_resource type="Script" path="res://AttackState.cs" id="6_eup3e"]
+[ext_resource type="Texture2D" uid="uid://bapt0w6buiitx" path="res://Art/Bot Wheel/gun.png" id="7_b11ii"]
+[ext_resource type="Texture2D" uid="uid://y3o6oooormb4" path="res://Art/Bot Wheel/shoot_gunless.png" id="8_1quly"]
+[ext_resource type="Script" path="res://StateDebug.cs" id="8_3i8bi"]
+[ext_resource type="Texture2D" uid="uid://b4xackbjd7jke" path="res://Art/Bot Wheel/shoot with FX_gun.png" id="9_5jfq1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mcmiw"]
+radius = 9.0
+height = 22.0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6c43t"]
+animation = &"air"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oa7t1"]
+animation = &"attack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3n4f8"]
+animation = &"walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hp0ji"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rmqfy"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ddx67"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_28b2y"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0epxq"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_bjjcr"]
+states/air/node = SubResource("AnimationNodeAnimation_6c43t")
+states/air/position = Vector2(401, 170)
+states/attack/node = SubResource("AnimationNodeAnimation_oa7t1")
+states/attack/position = Vector2(480, 94)
+states/walk/node = SubResource("AnimationNodeAnimation_3n4f8")
+states/walk/position = Vector2(335, 88)
+transitions = ["Start", "walk", SubResource("AnimationNodeStateMachineTransition_hp0ji"), "walk", "attack", SubResource("AnimationNodeStateMachineTransition_rmqfy"), "attack", "walk", SubResource("AnimationNodeStateMachineTransition_ddx67"), "air", "walk", SubResource("AnimationNodeStateMachineTransition_28b2y"), "walk", "air", SubResource("AnimationNodeStateMachineTransition_0epxq")]
+graph_offset = Vector2(-201, -10)
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_34lsi"]
+
+[sub_resource type="Animation" id="Animation_w4yi8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Gun/GunFX:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_miv2k"]
+resource_name = "air"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_1ysmt")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_jklb1"]
+resource_name = "attack"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("8_1quly")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Gun/GunFX:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("9_5jfq1")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Gun/GunFX:vframes")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Gun/GunFX:frame")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = false
+tracks/6/path = NodePath("Gun/GunFX:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_u6h6m"]
+resource_name = "walk"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_bjcte")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(-0.1, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Gun/GunFX:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_b11ii")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Gun/GunFX:hframes")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Gun/GunFX:frame")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e4o6n"]
+_data = {
+"RESET": SubResource("Animation_w4yi8"),
+"air": SubResource("Animation_miv2k"),
+"attack": SubResource("Animation_jklb1"),
+"walk": SubResource("Animation_u6h6m")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_1u7d3"]
+font_size = 12
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("MyStateMachine")]
+collision_layer = 2
+script = ExtResource("1_g7hw2")
+MyStateMachine = NodePath("CharacterStateMachine")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_mcmiw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, -1)
+texture = ExtResource("2_bjcte")
+offset = Vector2(35, 0)
+vframes = 8
+
+[node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("animationTree", "MyBody", "CurrentState")]
+script = ExtResource("3_rleej")
+animationTree = NodePath("../AnimationTree")
+MyBody = NodePath("..")
+CurrentState = NodePath("Ground")
+
+[node name="Ground" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("airState")]
+script = ExtResource("4_b5cvb")
+airState = NodePath("../Air")
+moveable = true
+
+[node name="Air" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("5_qwht0")
+moveable = true
+
+[node name="Attack" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("6_eup3e")
+bulletsInShot = 5
+maxSpreadDegree = 15
+moveable = true
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_bjjcr")
+anim_player = NodePath("../AnimationPlayer")
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_34lsi")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_e4o6n")
+}
+
+[node name="Label" type="Label" parent="."]
+offset_left = -30.0
+offset_top = -28.0
+offset_right = 15.0
+offset_bottom = -2.0
+text = "State:"
+label_settings = SubResource("LabelSettings_1u7d3")
+script = ExtResource("8_3i8bi")
+
+[node name="Gun" type="Node2D" parent="."]
+
+[node name="GunFX" type="Sprite2D" parent="Gun"]
+position = Vector2(34, -1)
+texture = ExtResource("7_b11ii")
+vframes = 4
