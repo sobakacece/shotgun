@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dr7m6wxydxl27"]
+
+[ext_resource type="Script" path="res://DrawingFABRIK.cs" id="1_swpxi"]
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("startMark", "goalMark")]
+script = ExtResource("1_swpxi")
+startMark = NodePath("Start")
+goalMark = NodePath("Goal")
+speed = 10.0
+length = PackedFloat32Array(200, 300, 150)
+angles = PackedInt32Array(45, -45, 45)
+
+[node name="Start" type="Marker2D" parent="."]
+position = Vector2(147, 248)
+
+[node name="Goal" type="Marker2D" parent="."]
+position = Vector2(451, 214)
